@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" />
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="/simplePagination/jquery.simplePagination.js"></script>
+	<link rel="stylesheet" href="/simplePagination/simplePagination.css"  type="text/css">
+</head>
+<style>
+	.bottom{
+		display:flex;
+		flex-direction:row;
+        padding-left:25%;
+	}
+</style>
+
+<body>
+    <a href="/user/add" class="button is-info">添加</a>
+    <table class="table is-bordered">
+        <tr>
+            <th>序号</th>
+            <th>id</th>
+            <th>姓名</th>
+            <th>地址</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+        {{each data.userList val index}}
+        <tr>
+            <td>{{index + 1}}</td>
+            <td>{{val.id}}</td>
+            <td>{{val.name}}</td>
+            <td>{{val.address}}</td>
+            <td>{{val.email}}</td>
+            <td>
+                <a class='del button is-warning is-small' uid="{{val.id}}" href="/user/del?id={{val.id}}">删除</a>
+                <a href="/user/edit?id={{val.id}}" class="button is-link is-small">修改</a>
+            </td>
+        </tr>
+        {{/each}}
+	</table>
+	<div class='bottom'>
+		<div class="pagination"></div>
+		<div class="pagina">
+			<span></span>
+			<select class="pagecount" >
+				<option value="10">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+			</select>
+		</div>
+		<div class="xzypag">
+			<span>自定义条数</span>
+			<input type="number" value="{{data.size}}" min="0" class="count">
+			<a href="javascript:void(0)" class="button is-link search">确定</a>
+		</div>
+	</div>
+</body>
+<script>
+    $(function () {
+        $(".del").click(function (e) {
+            if (!confirm("确定要删除" + $(this).attr('uid'))) {
+                e.stopPropagation()
+                e.preventDefault()
+            }
+		})
+		function GetUrlParam(name) {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+            if(r!=null)return  unescape(r[2]); return null;
+	　　}
+		function getList(page = 1, size = 10) {
+			$(".pagination").pagination({
+	　　        items: '{{data.total}}' || -1,
+	　　       	itemsOnPage: size || 10,
+	　　        cssStyle: 'light-theme',
+				currentPage: page || 1,
+                prevText:'上一页',
+                nextText:'下一页',
+				onPageClick(pageNumber, event) {
+					window.location.href = '/xzy/cool?page=' + pageNumber + '&size=' + size
+				}
+
+
+	　　   });
+
+		}
+        let page = GetUrlParam('page') || 1
+        let size = GetUrlParam('size') || 10
+		getList(page, size)
+		$(".search").click(function() {
+			var reg = /^[0-9]+$/
+			if(!$(".count").val()) {
+				return false
+			} else {
+				if(!reg.test($(".count").val())) {
+					alert('格式不正确')
+				} else {
+					window.location.href = '/xzy/cool?page=' + 1 + '&size=' + parseInt($(".count").val())
+				}
+			}
+		})
+        $(".pagecount").change(function() {
+            window.location.href = '/xzy/cool?page=' + 1 + '&size=' + parseInt($(".pagecount").val())
+        })
+
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" />
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="simplePagination/jquery.simplePagination.js"></script>
+	<link rel="stylesheet" href="simplePagination/simplePagination.css">
+</head>
+<style>
+	.bottom{
+		display:flex;
+		flex-direction:row;
+		justify-content : space-between;
+	}
+</style>
+
+<body>
+    <a href="/user/add" class="button is-info">添加</a>
+    <table class="table is-bordered">
+        <tr>
+            <th>序号</th>
+            <th>id</th>
+            <th>姓名</th>
+            <th>地址</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+        {{each data.userList.data val index}}
+        <tr>
+            <td>{{index}}</td>
+            <td>{{val.id}}</td>
+            <td>{{val.name}}</td>
+            <td>{{val.address}}</td>
+            <td>{{val.email}}</td>
+            <td>
+                <a class='del button is-warning is-small' uid="{{val.id}}" href="/user/del?id={{val.id}}">删除</a>
+                <a href="/user/edit?id={{val.id}}" class="button is-link is-small">修改</a>
+            </td>
+        </tr>
+        {{/each}}
+	</table>
+	<div class='bottom'>
+		<div class="pagination"></div>
+		<div class="pagina">
+			<span></span>
+			<select class="pagecount">
+				<option value="10">10</option>
+				<option value="20"></option>
+				<option value="50"></option>
+			</select>
+		</div>
+		<div class="xzypag">
+			<span>自定义条数</span>
+			<input type="number" value="{{data.size}}" min="0" class="count">
+			<a href="javascript:void(0)" class="button is-link search">确定</a>
+		</div>
+	</div>
+</body>
+<script>
+    $(function () {
+        $(".del").click(function (e) {
+            if (!confirm("确定要删除" + $(this).attr('uid'))) {
+                e.stopPropagation()
+                e.preventDefault()
+            }
+		})
+		function GetUrlParam(paraName) {
+	　　　　var url = document.location.toString();
+	　　　　var arrObj = url.split("?");
+	
+	　　　　if (arrObj.length > 1) {
+	　　　　　　var arrPara = arrObj[1].split("&");
+	　　　　　　var arr;
+	
+	　　　　　　for (var i = 0; i < arrPara.length; i++) {
+	　　　　　　　　arr = arrPara[i].split("=");
+	
+	　　　　　　　　if (arr != null && arr[0] == paraName) {
+	　　　　　　　　　　return arr[1];
+	　　　　　　　　}
+	　　　　　　}
+	　　　　　　return "";
+	　　　　}
+	　　　　else {
+	　　　　　　return "";
+	　　　　}
+	　　}
+		function getList(page, size) {
+			$(".pagination").pagination({
+	　　        items: {{data.total}} || -1,
+	　　       	itemsOnPage: size || 10,
+	　　        cssStyle: 'light-theme',
+				currentPage: page ||1,
+				prevText:'上一页'，
+				nextText: '下一页'，
+				onPageClick(pageNumber, event) {
+					window.location.href = '/xzy/cool?page=' + page + '&size=' + size
+				}
+
+
+	　　   });
+
+		}
+		getList(GetUrlParam('page'), GetUrlParam('size'))
+		$(".search").click(function() {
+			var reg = /^[0-9]+$/
+			if(!$(".count").val()) {
+				return false
+			} else {
+				if(!reg.test($(".count").val())) {
+					alert('格式不正确')
+				} else {
+					window.location.href = '/xzy/cool?page=' + 1 + '&size=' + parseInt($(".count").val())
+				}
+			}
+		})
+
+    })
+
+</script>
+
+</html>

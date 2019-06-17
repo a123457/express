@@ -1,0 +1,39 @@
+{
+	"images":[
+		{"name":"bg_day","url":"image/bg_day.png"},
+		{"name":"bg_night","url":"image/bg_night.png"},
+		{"name":"bird0_0","url":"image/bird0_0.png"},
+		{"name":"bird0_1","url":"image/bird0_1.png"},
+		{"name":"bird0_2","url":"image/bird0_2.png"},
+		{"name":"bird1_0","url":"image/bird1_0.png"},
+		{"name":"bird1_1","url":"image/bird1_1.png"},
+		{"name":"bird1_2","url":"image/bird1_2.png"},
+		{"name":"bird2_0","url":"image/bird2_0.png"},
+		{"name":"bird2_1","url":"image/bird2_1.png"},
+		{"name":"bird2_2","url":"image/bird2_2.png"},
+		{"name":"land","url":"image/land.png"},
+		{"name":"pipe_up","url":"image/pipe_up.png"},
+		{"name":"pipe_down","url":"image/pipe_down.png"},
+		{"name":"num0","url":"image/font_048.png"},
+		{"name":"num1","url":"image/font_049.png"},
+		{"name":"num2","url":"image/font_050.png"},
+		{"name":"num3","url":"image/font_051.png"},
+		{"name":"num4","url":"image/font_052.png"},
+		{"name":"num5","url":"image/font_053.png"},
+		{"name":"num6","url":"image/font_054.png"},
+		{"name":"num7","url":"image/font_055.png"},
+		{"name":"num8","url":"image/font_056.png"},
+		{"name":"num9","url":"image/font_057.png"},
+		{"name":"logo","url":"image/title.png"},
+		{"name":"button_play","url":"image/button_play.png"},
+		{"name":"tutorial","url":"image/tutorial.png"},
+		{"name":"pause","url":"image/button_pause.png"},
+		{"name":"resume","url":"image/button_resume.png"},
+		{"name":"beng","url":"image/beng.png"},
+		{"name":"text_game_over","url":"image/text_game_over.png"},
+		{"name":"button_rate","url":"image/button_rate.png"},
+		{"name":"medals","url":"image/medals_1.png"}
+
+		
+	]
+}

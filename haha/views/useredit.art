@@ -1,0 +1,88 @@
+<html>
+
+	<head>
+		<title></title>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" />
+        <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	</head>
+	<style type="text/css">
+		.help {
+			display: none;
+		}
+		.body{
+			width:100%;
+			height:100%;
+			background: #000;
+			position:absolute;
+			top: 0;
+			left: 0;
+			z-index:1;
+			opacity: 0.3;
+		}
+	</style>
+
+	<body>
+        <form action="/user/edit" method="post" enctype="application/json" style="width:50%" id="userform">
+            <div class="field">
+				<label class="label">id:</label>
+				<div class="control">
+					<input class="input" type="text" name="id" id='id' readonly='readonly' value="{{editData.id}}" />
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Name:</label>
+				<div class="control">
+					<input class="input editinput" type="text" name="name" id='name' value="{{editData.name}}" />
+				</div>
+				<p class="help is-danger name">name不能为空</p>
+			</div>
+			<div class="field">
+				<label class="label">Email:</label>
+				<div class="control">
+					<input class="input editinput" type="email" name="email" id='email' value="{{editData.email}}" />
+				</div>
+				<p class="help is-danger email">email不能为空</p>
+			</div>
+			<div class="field">
+				<label class="label">Address:</label>
+				<div class="control">
+					<input class="input editinput" type="address" name="address" id='address'  value="{{editData.address}}" />
+				</div>
+				<p class="help is-danger address">address不能为空</p>
+			</div>
+			<input type="button" value="提交" class="button is-info submit" />
+			<input type="reset" value="清空" class="button is-warning" />
+		</form>
+	</body>
+    <script type="text/javascript">
+    $(function(){
+       $(".submit").click(function(){
+		   console.log("点击了")
+           var isChecked = true
+           if($("#name").val() == '') {
+               $(".name").show()
+               isChecked = false
+           } 
+           if($("#email").val() == '') {
+               $(".email").show()
+               isChecked = false
+           }
+           if($("#address").val() == '') {
+               $(".address").show()
+               isChecked = false
+           }
+           if(!isChecked)
+             return false
+           else 
+            $("#userform").submit()    
+        })
+        $(".editinput").keyup(function(){
+            if(!$(this).val())
+               $(this).parent().siblings('p').show()
+            else 
+               $(this).parent().siblings('p').hide()     
+        })
+     })
+	</script>
+
+</html>
